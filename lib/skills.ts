@@ -24,7 +24,7 @@ async function fetchHtml(url: string): Promise<string | null> {
     }
 }
 
-function selectSkillAnchors($: cheerio.CheerioAPI): cheerio.Cheerio<cheerio.AnyNode> {
+function selectSkillAnchors($: cheerio.CheerioAPI) {
     const scoped = $('main a');
     return scoped.length > 0 ? scoped : $('a');
 }
