@@ -1,5 +1,6 @@
 
 import * as cheerio from 'cheerio';
+import type { Element } from 'domhandler';
 
 export interface SkillsMetrics {
     totalSkills: string;
@@ -49,7 +50,7 @@ function parseSkillParts(href: string): { owner: string; repo: string; name: str
     return { owner, repo, name };
 }
 
-function parseRankAndDownloads($el: cheerio.Cheerio<cheerio.Element>, fallbackRank: number): { rank: number; downloads: string } {
+function parseRankAndDownloads($el: cheerio.Cheerio<Element>, fallbackRank: number): { rank: number; downloads: string } {
     const divs = $el.find('div');
     let downloads = '?';
     let rank = fallbackRank;
