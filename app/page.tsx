@@ -1,65 +1,219 @@
-import Image from "next/image";
+import { getSkillsMetrics, getTopSkillsForChart, getOwnerDistribution } from '../lib/skills';
+import { SearchBar } from '../components/SearchBar';
+import Link from 'next/link';
 
-export default function Home() {
+export default async function Home() {
+  const [metrics, topSkills, ownerDist] = await Promise.all([
+    getSkillsMetrics(),
+    getTopSkillsForChart(8),
+    getOwnerDistribution(6)
+  ]);
+
+  const maxDownloads = topSkills[0]?.downloads || 1;
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+    <>
+
+
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col overflow-hidden">
+
+        {/* Header / Search */}
+        {/* Header */}
+        <header className="h-16 border-b border-border flex items-center justify-between px-8 bg-background/50 backdrop-blur-sm sticky top-0 z-10">
+          {/* Search Bar */}
+          <div className="flex-1 max-w-md">
+            <SearchBar />
+          </div>
+
+          <div className="flex items-center gap-4">
+          </div>
+        </header>
+
+        {/* Content - No Scroll, Viewport Fit */}
+        <div className="flex-1 flex flex-col p-6 gap-5 overflow-hidden">
+          <div className="flex-1 flex flex-col gap-5 min-h-0">
+
+            {/* Section: Stats */}
+            <section className="shrink-0">
+              <div className="flex items-end justify-between mb-3">
+                <h2 className="text-xl font-bold tracking-tight">Dashboard</h2>
+                <span className="font-mono text-xs text-text-secondary">SYNCED WITH SKILLS.SH · EVERY 5 MIN</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Total Skills */}
+                <Link href="/all" className="tech-card p-4 rounded-md flex flex-col justify-between h-24 group hover:border-white transition-colors cursor-pointer">
+                  <div className="flex justify-between items-start">
+                    <span className="mono-label text-text-secondary group-hover:text-white transition-colors">Total Skills</span>
+                    <span className="material-icons-outlined text-text-muted group-hover:text-white transition-colors">library_books</span>
+                  </div>
+                  <div className="flex items-end gap-3">
+                    <span className="text-3xl font-bold font-mono">{metrics.totalSkills || '47,000+'}</span>
+                  </div>
+                </Link>
+
+                {/* Trending (24h) */}
+                <Link href="/trending" className="tech-card p-4 rounded-md flex flex-col justify-between h-24 group hover:border-white transition-colors cursor-pointer">
+                  <div className="flex justify-between items-start">
+                    <span className="mono-label text-text-secondary group-hover:text-white transition-colors">Trending (24h)</span>
+                    <span className="material-icons-outlined text-text-muted group-hover:text-white transition-colors">trending_up</span>
+                  </div>
+                  <div className="flex flex-col mt-auto">
+                    <span className="text-xl font-bold font-mono truncate">{metrics.trendingSkillName || 'Loading...'}</span>
+                  </div>
+                </Link>
+
+                {/* Hottest Skill */}
+                <Link href="/hot" className="tech-card p-4 rounded-md flex flex-col justify-between h-24 group hover:border-white transition-colors cursor-pointer">
+                  <div className="flex justify-between items-start">
+                    <span className="mono-label text-text-secondary group-hover:text-white transition-colors">Hottest Skill</span>
+                    <span className="material-icons-outlined text-text-muted group-hover:text-white transition-colors">local_fire_department</span>
+                  </div>
+                  <div className="flex flex-col mt-auto">
+                    <span className="text-xl font-bold font-mono truncate">{metrics.hottestSkillName || 'Agentic AI'}</span>
+                  </div>
+                </Link>
+              </div>
+            </section>
+
+            {/* Section: Charts */}
+            <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-5 mt-2">
+
+              {/* Top Skills by Downloads */}
+              <div className="tech-card p-4 rounded-md flex flex-col">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-semibold">Top Skills by Downloads</h3>
+                  <span className="font-mono text-xs text-text-secondary">TOP 8</span>
+                </div>
+
+                <div className="flex-1 flex flex-col justify-between">
+                  {topSkills.map((skill, i) => (
+                    <div key={skill.name} className="group">
+                      <div className="flex items-center justify-between mb-1">
+                        <a
+                          href={skill.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-mono text-text-secondary truncate max-w-[200px] hover:text-white transition-colors"
+                          title={skill.name}
+                        >
+                          {i + 1}. {skill.name}
+                        </a>
+                        <span className="text-xs font-mono text-white">{skill.downloadsFormatted}</span>
+                      </div>
+                      <div className="h-2 bg-neutral-900 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-blue-500 to-blue-400 group-hover:from-blue-400 group-hover:to-blue-300 transition-colors rounded-full"
+                          style={{ width: `${(skill.downloads / maxDownloads) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Owner Distribution */}
+              <div className="tech-card p-4 rounded-md flex flex-col">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-semibold">Skills by Organization</h3>
+                  <span className="font-mono text-xs text-text-secondary">TOP 6</span>
+                </div>
+
+                <div className="flex-1 flex flex-col justify-between">
+                  {ownerDist.map((item, i) => {
+                    const colors = [
+                      'from-purple-500 to-purple-400',
+                      'from-green-500 to-green-400',
+                      'from-orange-500 to-orange-400',
+                      'from-pink-500 to-pink-400',
+                      'from-cyan-500 to-cyan-400',
+                      'from-yellow-500 to-yellow-400',
+                    ];
+                    return (
+                      <div key={item.owner} className="group">
+                        <div className="flex items-center justify-between mb-1.5">
+                          <a
+                            href={`https://skills.sh/${item.owner}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm font-mono text-text-secondary truncate max-w-[200px] hover:text-white transition-colors"
+                          >
+                            {item.owner}
+                          </a>
+                          <span className="text-sm font-mono text-white">{item.count} skills ({item.percentage}%)</span>
+                        </div>
+                        <div className="h-2.5 bg-neutral-900 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full bg-gradient-to-r ${colors[i % colors.length]} transition-colors rounded-full`}
+                            style={{ width: `${item.percentage}%` }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+            </div>
+
+            {/* Footer / Usage Guide */}
+            <div className="border-t border-border pt-4 mt-auto shrink-0">
+              <h3 className="text-xs font-bold text-white mb-2 flex items-center gap-2">
+                <span className="material-icons-outlined text-base">terminal</span>
+                <span>Quick Start</span>
+              </h3>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+
+                {/* Save/Add */}
+                <div className="bg-black border border-border rounded-md p-3 group hover:border-text-secondary transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-text-secondary text-xs font-mono">Install a skill</span>
+                    <span className="material-icons-outlined text-text-muted text-sm">download</span>
+                  </div>
+                  <code className="text-xs font-mono text-green-400 block bg-surface/50 p-2 rounded">
+                    npx skills add &lt;name&gt;
+                  </code>
+                </div>
+
+                {/* Search */}
+                <div className="bg-black border border-border rounded-md p-3 group hover:border-text-secondary transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-text-secondary text-xs font-mono">Search skills</span>
+                    <span className="material-icons-outlined text-text-muted text-sm">search</span>
+                  </div>
+                  <code className="text-xs font-mono text-blue-400 block bg-surface/50 p-2 rounded">
+                    npx skills search &lt;query&gt;
+                  </code>
+                </div>
+
+                {/* List */}
+                <div className="bg-black border border-border rounded-md p-3 group hover:border-text-secondary transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-text-secondary text-xs font-mono">List installed</span>
+                    <span className="material-icons-outlined text-text-muted text-sm">list</span>
+                  </div>
+                  <code className="text-xs font-mono text-orange-400 block bg-surface/50 p-2 rounded">
+                    npx skills list
+                  </code>
+                </div>
+
+                {/* Update */}
+                <div className="bg-black border border-border rounded-md p-3 group hover:border-text-secondary transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-text-secondary text-xs font-mono">Update skills</span>
+                    <span className="material-icons-outlined text-text-muted text-sm">update</span>
+                  </div>
+                  <code className="text-xs font-mono text-purple-400 block bg-surface/50 p-2 rounded">
+                    npx skills update
+                  </code>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
         </div>
       </main>
-    </div>
+    </>
   );
 }

@@ -1,0 +1,30 @@
+[
+  {
+    "text": "Welcome to Skills.sh, a live dashboard for tracking agent skills.",
+    "startMs": 0,
+    "endMs": 3000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "Explore trending skills, hot releases, and top download leaders.",
+    "startMs": 3000,
+    "endMs": 7000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "See organization insights to understand adoption across teams.",
+    "startMs": 7000,
+    "endMs": 12000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "Stay synced and discover what to learn next.",
+    "startMs": 12000,
+    "endMs": 15000,
+    "timestampMs": null,
+    "confidence": null
+  }
+]
