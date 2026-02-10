@@ -276,6 +276,46 @@ function parseDownloads(str: string): number {
     }
 }
 
+export interface SkillDetail {
+    name: string;
+    owner: string;
+    repo: string;
+    url: string;
+    description: string;
+    installCommand: string;
+}
+
+export async function getSkillDetail(owner: string, repo: string, name: string): Promise<SkillDetail | null> {
+    const url = `${BASE_URL}/${owner}/${repo}/${name}`;
+    const html = await fetchHtml(url);
+    if (!html) {
+        return {
+            name,
+            owner,
+            repo,
+            url,
+            description: 'Skill details are only available when connected to skills.sh.',
+            installCommand: `npx skills add ${owner}/${repo}/${name}`,
+        };
+    }
+    const $ = cheerio.load(html);
+
+    // Try to extract description from meta tag or first paragraph
+    let description = $('meta[name="description"]').attr('content') || '';
+    if (!description) {
+        description = $('main p').first().text().trim() || 'No description available.';
+    }
+
+    return {
+        name,
+        owner,
+        repo,
+        url,
+        description,
+        installCommand: `npx skills add ${owner}/${repo}/${name}`,
+    };
+}
+
 export const __test = {
     normalizeSkillUrl,
     isSkillUrl,

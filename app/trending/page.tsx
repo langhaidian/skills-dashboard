@@ -46,14 +46,12 @@ export default async function TrendingSkillsPage() {
                                         {skill.downloads}
                                     </span>
 
-                                    <a
-                                        href={skill.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                    <Link
+                                        href={`/skill/${skill.owner}/${skill.repo}/${skill.name}`}
                                         className="text-xs text-text-muted hover:text-white transition-colors"
                                     >
-                                        <span className="material-icons-outlined text-[16px]">open_in_new</span>
-                                    </a>
+                                        <span className="material-icons-outlined text-[16px]">arrow_forward</span>
+                                    </Link>
                                 </div>
                             </div>
                         ))}
