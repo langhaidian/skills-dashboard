@@ -2,7 +2,7 @@ import { getSkillsMetrics, getTopSkillsForChart, getOwnerDistribution, getAllSki
 import { SearchBar } from '../components/SearchBar';
 import { ThemeToggleButton } from '../components/ThemeProvider';
 import { SyncIndicator } from '../components/SyncIndicator';
-import { TagCloud } from '../components/TagCloud';
+import { CategoryPieChart } from '../components/CategoryPieChart';
 import Link from 'next/link';
 
 export default async function Home() {
@@ -16,6 +16,7 @@ export default async function Home() {
   const maxDownloads = topSkills[0]?.downloads || 1;
   const syncedAt = new Date().toISOString();
   const skillNames = allSkills.map(s => `${s.owner}/${s.name}`);
+
 
   return (
     <>
@@ -50,13 +51,13 @@ export default async function Home() {
         </header>
 
         {/* Content */}
-        <div className="flex-1 flex flex-col p-6 gap-5 overflow-y-auto">
-          <div className="flex-1 flex flex-col gap-5 min-h-0">
+        <div className="flex-1 flex flex-col p-4 gap-3 overflow-hidden">
+          <div className="flex-1 flex flex-col gap-3 min-h-0">
 
             {/* Section: Stats */}
             <section className="shrink-0">
-              <div className="flex items-end justify-between mb-3">
-                <h2 className="text-xl font-bold tracking-tight">Dashboard</h2>
+              <div className="flex items-end justify-between mb-2">
+                <h2 className="text-lg font-bold tracking-tight">Dashboard</h2>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -100,16 +101,16 @@ export default async function Home() {
             </section>
 
             {/* Section: Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 flex-1 min-h-0">
 
               {/* Top Skills by Downloads */}
-              <div className="tech-card p-4 rounded-md flex flex-col">
-                <div className="flex items-center justify-between mb-3">
+              <div className="tech-card p-3 rounded-md flex flex-col min-h-0 overflow-hidden">
+                <div className="flex items-center justify-between mb-2 shrink-0">
                   <h3 className="text-sm font-semibold">Top Skills by Downloads</h3>
                   <span className="font-mono text-xs text-text-secondary">TOP 8</span>
                 </div>
 
-                <div className="flex-1 flex flex-col justify-between gap-2">
+                <div className="flex-1 flex flex-col justify-between gap-1 min-h-0 overflow-hidden">
                   {topSkills.map((skill, i) => (
                     <div key={skill.name} className="group">
                       <div className="flex items-center justify-between mb-1">
@@ -136,13 +137,13 @@ export default async function Home() {
               </div>
 
               {/* Owner Distribution */}
-              <div className="tech-card p-4 rounded-md flex flex-col">
-                <div className="flex items-center justify-between mb-3">
+              <div className="tech-card p-3 rounded-md flex flex-col min-h-0 overflow-hidden">
+                <div className="flex items-center justify-between mb-2 shrink-0">
                   <h3 className="text-sm font-semibold">Skills by Organization</h3>
                   <span className="font-mono text-xs text-text-secondary">TOP 6</span>
                 </div>
 
-                <div className="flex-1 flex flex-col justify-between gap-2">
+                <div className="flex-1 flex flex-col justify-between gap-1 min-h-0 overflow-hidden">
                   {ownerDist.map((item, i) => {
                     const colors = [
                       'from-purple-500 to-purple-400',
@@ -179,19 +180,19 @@ export default async function Home() {
 
             </div>
 
-            {/* Section: Tag Cloud */}
-            <TagCloud skillNames={skillNames} />
+            {/* Section: Category Distribution */}
+            <CategoryPieChart skillNames={skillNames} />
 
             {/* Footer / Usage Guide */}
-            <div className="border-t border-border pt-4 mt-auto shrink-0">
-              <h3 className="text-xs font-bold text-white mb-2 flex items-center gap-2">
+            <div className="border-t border-border pt-2 mt-auto shrink-0">
+              <h3 className="text-xs font-bold text-white mb-1.5 flex items-center gap-2">
                 <span className="material-icons-outlined text-base">terminal</span>
                 <span>Quick Start</span>
               </h3>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
 
                 {/* Save/Add */}
-                <div className="bg-black border border-border rounded-md p-3 group hover:border-text-secondary transition-colors">
+                <div className="bg-black border border-border rounded-md p-2 group hover:border-text-secondary transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-text-secondary text-xs font-mono">Install a skill</span>
                     <span className="material-icons-outlined text-text-muted text-sm">download</span>
@@ -202,7 +203,7 @@ export default async function Home() {
                 </div>
 
                 {/* Search */}
-                <div className="bg-black border border-border rounded-md p-3 group hover:border-text-secondary transition-colors">
+                <div className="bg-black border border-border rounded-md p-2 group hover:border-text-secondary transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-text-secondary text-xs font-mono">Search skills</span>
                     <span className="material-icons-outlined text-text-muted text-sm">search</span>
@@ -213,7 +214,7 @@ export default async function Home() {
                 </div>
 
                 {/* List */}
-                <div className="bg-black border border-border rounded-md p-3 group hover:border-text-secondary transition-colors">
+                <div className="bg-black border border-border rounded-md p-2 group hover:border-text-secondary transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-text-secondary text-xs font-mono">List installed</span>
                     <span className="material-icons-outlined text-text-muted text-sm">list</span>
@@ -224,7 +225,7 @@ export default async function Home() {
                 </div>
 
                 {/* Update */}
-                <div className="bg-black border border-border rounded-md p-3 group hover:border-text-secondary transition-colors">
+                <div className="bg-black border border-border rounded-md p-2 group hover:border-text-secondary transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-text-secondary text-xs font-mono">Update skills</span>
                     <span className="material-icons-outlined text-text-muted text-sm">update</span>

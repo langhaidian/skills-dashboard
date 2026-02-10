@@ -43,6 +43,41 @@
   color: #1d1d1f !important;
 }
 
+/* Light mode: Sidebar */
+.light aside {
+  background-color: #e2e2e5 !important;
+  border-color: var(--color-border) !important;
+}
+
+.light aside .bg-surface {
+  background-color: #d5d5d9 !important;
+}
+
+.light aside .h-8.w-8.bg-white {
+  background-color: #1d1d1f !important;
+  color: #eeeef0 !important;
+}
+
+/* Light mode: Search bar */
+.light .bg-surface {
+  background-color: #e4e4e7 !important;
+}
+
+.light input {
+  background-color: #e4e4e7 !important;
+  border-color: var(--color-border) !important;
+  color: #1d1d1f !important;
+}
+
+.light input::placeholder {
+  color: #9a9a9e !important;
+}
+
+/* Light mode: code blocks */
+.light code {
+  background-color: #d8d8dc !important;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
