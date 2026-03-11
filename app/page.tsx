@@ -185,15 +185,56 @@ export default async function Home() {
 
             {/* Footer / Quick Start */}
             <div className="border-t border-border pt-2 mt-auto shrink-0">
-              <h3 className="text-xs font-bold text-white mb-2 flex items-center gap-2">
+              <h3 className="text-xs font-bold text-white mb-1.5 flex items-center gap-2">
                 <span className="material-icons-outlined text-base">terminal</span>
                 <span>Quick Start</span>
               </h3>
-              <div className="flex flex-wrap gap-x-6 gap-y-1">
-                <code className="text-xs font-mono text-green-400">npx skills add &lt;name&gt;</code>
-                <code className="text-xs font-mono text-blue-400">npx skills search &lt;query&gt;</code>
-                <code className="text-xs font-mono text-orange-400">npx skills list</code>
-                <code className="text-xs font-mono text-purple-400">npx skills update</code>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+
+                {/* Save/Add */}
+                <div className="tech-card rounded-md p-2 group hover:border-text-secondary transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-text-secondary text-xs font-mono">Install a skill</span>
+                    <span className="material-icons-outlined text-text-muted text-sm">download</span>
+                  </div>
+                  <code className="text-xs font-mono text-green-400 block bg-surface p-2 rounded">
+                    npx skills add &lt;name&gt;
+                  </code>
+                </div>
+
+                {/* Search */}
+                <div className="tech-card rounded-md p-2 group hover:border-text-secondary transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-text-secondary text-xs font-mono">Search skills</span>
+                    <span className="material-icons-outlined text-text-muted text-sm">search</span>
+                  </div>
+                  <code className="text-xs font-mono text-blue-400 block bg-surface p-2 rounded">
+                    npx skills search &lt;query&gt;
+                  </code>
+                </div>
+
+                {/* List */}
+                <div className="tech-card rounded-md p-2 group hover:border-text-secondary transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-text-secondary text-xs font-mono">List installed</span>
+                    <span className="material-icons-outlined text-text-muted text-sm">list</span>
+                  </div>
+                  <code className="text-xs font-mono text-orange-400 block bg-surface p-2 rounded">
+                    npx skills list
+                  </code>
+                </div>
+
+                {/* Update */}
+                <div className="tech-card rounded-md p-2 group hover:border-text-secondary transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-text-secondary text-xs font-mono">Update skills</span>
+                    <span className="material-icons-outlined text-text-muted text-sm">update</span>
+                  </div>
+                  <code className="text-xs font-mono text-purple-400 block bg-surface p-2 rounded">
+                    npx skills update
+                  </code>
+                </div>
+
               </div>
             </div>
 
