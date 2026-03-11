@@ -1,5 +1,5 @@
 import { getTrendingSkills } from '../../lib/skills';
-import { SkillCard } from '../../components/SkillCard';
+import Link from 'next/link';
 
 export default async function TrendingSkillsPage() {
     const skills = await getTrendingSkills();
@@ -20,22 +20,50 @@ export default async function TrendingSkillsPage() {
                 </span>
             </header>
 
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto p-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+            {/* Ranked List */}
+            <div className="flex-1 overflow-y-auto">
+                <div className="divide-y divide-border/50">
                     {skills.map((skill) => (
-                        <SkillCard
+                        <Link
                             key={`${skill.owner}-${skill.repo}-${skill.name}`}
-                            name={skill.name}
-                            owner={skill.owner}
-                            repo={skill.repo}
-                            rank={skill.rank}
-                            downloads={skill.downloads}
-                            variant="trending"
-                        />
+                            href={`/skill/${skill.owner}/${skill.repo}/${skill.name}`}
+                            className="flex items-center gap-4 px-6 py-3 hover:bg-surface/50 transition-colors group"
+                        >
+                            {/* Rank */}
+                            <span className="text-sm font-mono text-green-400 w-8 text-right shrink-0">
+                                #{skill.rank}
+                            </span>
+
+                            {/* Trend icon */}
+                            <span className="material-icons-outlined text-green-400/60 text-[16px] shrink-0">
+                                trending_up
+                            </span>
+
+                            {/* Name + Owner */}
+                            <div className="flex-1 min-w-0">
+                                <span className="text-sm font-bold text-white group-hover:text-green-400 transition-colors truncate block">
+                                    {skill.name}
+                                </span>
+                                <span className="text-xs text-text-secondary font-mono truncate block">
+                                    {skill.owner}/{skill.repo}
+                                </span>
+                            </div>
+
+                            {/* Downloads */}
+                            <span className="text-xs font-mono text-text-secondary shrink-0 flex items-center gap-1">
+                                <span className="material-icons-outlined text-[14px] text-text-muted">download</span>
+                                {skill.downloads}
+                            </span>
+
+                            {/* Arrow */}
+                            <span className="material-icons-outlined text-[16px] text-text-muted group-hover:text-white transition-colors shrink-0">
+                                chevron_right
+                            </span>
+                        </Link>
                     ))}
                 </div>
             </div>
         </main>
     );
 }
+

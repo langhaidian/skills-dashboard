@@ -144,7 +144,7 @@ export function SearchBar() {
             <div className="absolute right-2 top-2 px-1.5 py-0.5 bg-background border border-border rounded text-[10px] font-mono text-text-secondary pointer-events-none">CMD+K</div>
 
             {isOpen && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-neutral-900 border border-border rounded-md shadow-2xl overflow-hidden z-50">
+                <div className="absolute top-full left-0 right-0 mt-2 bg-surface border border-border rounded-md shadow-2xl overflow-hidden z-50">
                     {/* Category filters */}
                     <div className="flex items-center gap-1 px-3 py-2 border-b border-border/50 overflow-x-auto">
                         {CATEGORY_FILTERS.map(cat => (
@@ -175,7 +175,7 @@ export function SearchBar() {
                                     <button
                                         key={skill.id}
                                         onClick={() => handleSelect(skill.id)}
-                                        className={`w-full text-left px-4 py-2.5 transition-colors border-b border-border/50 last:border-0 flex justify-between items-center group/item ${i === selectedIndex ? 'bg-neutral-800' : 'hover:bg-neutral-800'
+                                        className={`w-full text-left px-4 py-2.5 transition-colors border-b border-border/50 last:border-0 flex justify-between items-center group/item ${i === selectedIndex ? 'bg-surface/80' : 'hover:bg-surface/80'
                                             }`}
                                     >
                                         <div className="min-w-0 flex-1 pr-3">

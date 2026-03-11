@@ -37,7 +37,7 @@ export default async function AllSkillsPage({
 
             {/* Content */}
             <div className="flex-1 overflow-y-auto p-4 min-h-0">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 h-full" style={{ gridAutoRows: '1fr' }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                     {skills.map((skill) => (
                         <SkillCard
                             key={`${skill.owner}-${skill.repo}-${skill.name}`}

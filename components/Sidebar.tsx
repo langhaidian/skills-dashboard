@@ -18,7 +18,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen?: boolean; onClose?: () =>
             )}
 
             <aside className={clsx(
-                "w-64 border-r border-border flex flex-col justify-between p-6 bg-black shrink-0 z-50 transition-transform duration-300",
+                "w-64 border-r border-border flex flex-col justify-between p-6 bg-background shrink-0 z-50 transition-transform duration-300",
                 "fixed lg:relative h-full",
                 isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
             )}>

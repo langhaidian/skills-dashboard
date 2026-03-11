@@ -24,7 +24,7 @@ export default async function Home() {
       <main className="flex-1 flex flex-col overflow-hidden">
 
         {/* Header */}
-        <header className="h-16 border-b border-border flex items-center justify-between px-8 bg-background/50 backdrop-blur-sm sticky top-0 z-10">
+        <header className="h-14 border-b border-border flex items-center justify-between px-6 bg-background/50 backdrop-blur-sm sticky top-0 z-10">
           {/* Mobile spacer */}
           <div className="w-10 lg:hidden" />
 
@@ -125,7 +125,7 @@ export default async function Home() {
                         </a>
                         <span className="text-xs font-mono text-white">{skill.downloadsFormatted}</span>
                       </div>
-                      <div className="h-2 bg-neutral-900 rounded-full overflow-hidden">
+                      <div className="h-2 bg-surface rounded-full overflow-hidden">
                         <div
                           className="h-full bg-gradient-to-r from-blue-500 to-blue-400 group-hover:from-blue-400 group-hover:to-blue-300 transition-colors rounded-full"
                           style={{ width: `${(skill.downloads / maxDownloads) * 100}%` }}
@@ -166,7 +166,7 @@ export default async function Home() {
                           </a>
                           <span className="text-sm font-mono text-white">{item.count} skills ({item.percentage}%)</span>
                         </div>
-                        <div className="h-2.5 bg-neutral-900 rounded-full overflow-hidden">
+                        <div className="h-2 bg-surface rounded-full overflow-hidden">
                           <div
                             className={`h-full bg-gradient-to-r ${colors[i % colors.length]} transition-colors rounded-full`}
                             style={{ width: `${item.percentage}%` }}
@@ -183,58 +183,17 @@ export default async function Home() {
             {/* Section: Category Distribution */}
             <CategoryPieChart skillNames={skillNames} />
 
-            {/* Footer / Usage Guide */}
+            {/* Footer / Quick Start */}
             <div className="border-t border-border pt-2 mt-auto shrink-0">
-              <h3 className="text-xs font-bold text-white mb-1.5 flex items-center gap-2">
+              <h3 className="text-xs font-bold text-white mb-2 flex items-center gap-2">
                 <span className="material-icons-outlined text-base">terminal</span>
                 <span>Quick Start</span>
               </h3>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-
-                {/* Save/Add */}
-                <div className="bg-black border border-border rounded-md p-2 group hover:border-text-secondary transition-colors">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-text-secondary text-xs font-mono">Install a skill</span>
-                    <span className="material-icons-outlined text-text-muted text-sm">download</span>
-                  </div>
-                  <code className="text-xs font-mono text-green-400 block bg-surface/50 p-2 rounded">
-                    npx skills add &lt;name&gt;
-                  </code>
-                </div>
-
-                {/* Search */}
-                <div className="bg-black border border-border rounded-md p-2 group hover:border-text-secondary transition-colors">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-text-secondary text-xs font-mono">Search skills</span>
-                    <span className="material-icons-outlined text-text-muted text-sm">search</span>
-                  </div>
-                  <code className="text-xs font-mono text-blue-400 block bg-surface/50 p-2 rounded">
-                    npx skills search &lt;query&gt;
-                  </code>
-                </div>
-
-                {/* List */}
-                <div className="bg-black border border-border rounded-md p-2 group hover:border-text-secondary transition-colors">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-text-secondary text-xs font-mono">List installed</span>
-                    <span className="material-icons-outlined text-text-muted text-sm">list</span>
-                  </div>
-                  <code className="text-xs font-mono text-orange-400 block bg-surface/50 p-2 rounded">
-                    npx skills list
-                  </code>
-                </div>
-
-                {/* Update */}
-                <div className="bg-black border border-border rounded-md p-2 group hover:border-text-secondary transition-colors">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-text-secondary text-xs font-mono">Update skills</span>
-                    <span className="material-icons-outlined text-text-muted text-sm">update</span>
-                  </div>
-                  <code className="text-xs font-mono text-purple-400 block bg-surface/50 p-2 rounded">
-                    npx skills update
-                  </code>
-                </div>
-
+              <div className="flex flex-wrap gap-x-6 gap-y-1">
+                <code className="text-xs font-mono text-green-400">npx skills add &lt;name&gt;</code>
+                <code className="text-xs font-mono text-blue-400">npx skills search &lt;query&gt;</code>
+                <code className="text-xs font-mono text-orange-400">npx skills list</code>
+                <code className="text-xs font-mono text-purple-400">npx skills update</code>
               </div>
             </div>
 

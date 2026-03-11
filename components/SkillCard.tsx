@@ -36,17 +36,23 @@ export function SkillCard({ name, owner, repo, rank, downloads, variant = 'defau
     const config = VARIANT_CONFIG[variant];
 
     return (
-        <div
-            className={`group tech-card rounded-md p-3 ${config.hoverBorder} transition-all flex flex-col justify-between min-h-[104px]`}
+        <Link
+            href={`/skill/${owner}/${repo}/${name}`}
+            className={`group tech-card rounded-md p-3 ${config.hoverBorder} transition-colors`}
         >
             {/* Top: Name + Rank */}
             <div className="flex justify-between items-start">
-                <h3
-                    className={`font-bold text-white ${config.hoverText} transition-colors truncate pr-2 text-sm`}
-                    title={name}
-                >
-                    {name}
-                </h3>
+                <div className="min-w-0 pr-2">
+                    <h3
+                        className={`font-bold text-white ${config.hoverText} transition-colors truncate text-sm`}
+                        title={name}
+                    >
+                        {name}
+                    </h3>
+                    <p className="text-xs text-text-secondary truncate font-mono mt-0.5">
+                        {owner}/{repo}
+                    </p>
+                </div>
                 <span className={`text-xs font-mono ${config.badgeColor} shrink-0 flex items-center gap-0.5`}>
                     {config.icon && (
                         <span className="material-icons-outlined text-[12px]">{config.icon}</span>
@@ -55,25 +61,17 @@ export function SkillCard({ name, owner, repo, rank, downloads, variant = 'defau
                 </span>
             </div>
 
-            {/* Middle: Owner/Repo */}
-            <p className="text-xs text-text-secondary truncate font-mono mt-1">
-                {owner}/{repo}
-            </p>
-
-            {/* Bottom: Downloads + Link */}
-            <div className="flex items-center justify-between pt-2 border-t border-border/50 mt-auto">
+            {/* Bottom: Downloads + Arrow */}
+            <div className="flex items-center justify-between mt-2">
                 <span className="text-xs font-bold text-white flex items-center gap-1">
                     <span className="material-icons-outlined text-[14px] text-text-muted">download</span>
                     {downloads}
                 </span>
 
-                <Link
-                    href={`/skill/${owner}/${repo}/${name}`}
-                    className="text-xs text-text-muted hover:text-white transition-colors"
-                >
-                    <span className="material-icons-outlined text-[16px]">arrow_forward</span>
-                </Link>
+                <span className="material-icons-outlined text-[16px] text-text-muted group-hover:text-white transition-colors">
+                    arrow_forward
+                </span>
             </div>
-        </div>
+        </Link>
     );
 }
